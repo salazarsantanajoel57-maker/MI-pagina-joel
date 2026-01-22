@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Blog de Joel</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- INICIO -->
+<header id="inicio">
+    <h1>Mi nombre es Joel Salazar Santana</h1>
+    <h2>Soy estudiante de Ing. en Sistemas Computacionales</h2>
+    <p>Este espacio es para compartir quién soy, lo que me apasiona y las cosas que voy creando en el camino.</p>
+
+    <img src="img/portada.jpeg" width="150" class="foto-rectangular">
+
+    <button onclick="mostrarGustos()" class="btn-centro">Siguiente</button>
+</header>
+
+<!-- GUSTOS -->
+<section id="gustos" style="display:none;">
+    <h1>En este blog hablaré sobre mis gustos y algunas imágenes</h1>
+
+    <div class="galeria">
+        <h1>Me gusta todo lo relacionado con la tecnología y la creación de proyectos, especialmente la robótica.</h1>
+        <img src="img/03.jpeg">
+        <img src="img/imagen3.jpeg">
+
+        <h1>Me interesa aprender cómo funcionan los sistemas y seguir desarrollando mis habilidades.</h1>
+        <img src="img/imagen4.jpeg">
+        
+        <h1>Me gusta pasar tiempo de calidad con mis compañeros.</h1>
+        <img src="img/02.jpeg">
+
+        <h1>También me gustan mucho los caballos y la cultura vaquera.</h1>
+        <img src="img/01.jpeg">
+    </div>
+
+    <button onclick="mostrarMusica()" class="btn-centro">Ir a Música</button>
+    <button onclick="mostrarVideo()" class="btn-centro">Ir a Video</button>
+    <button onclick="volverInicio()" class="btn-centro">Volver</button>
+</section>
+
+<!-- MUSICA -->
+<section id="musica" style="display:none;">
+    <h1>Mis gustos musicales influyen en mi día a día</h1>
+
+    <label><strong>Elige una canción:</strong></label><br><br>
+
+    <select id="listaCanciones">
+        <option value="">-- Selecciona una canción --</option>
+        <option value="music/cancion1.mp3">Canción 1</option>
+        <option value="music/cancion2.mp3">Canción 2</option>
+        <option value="music/cancion3.mp3">Canción 3</option>
+    </select>
+
+    <p><strong>Reproduciendo:</strong> <span id="cancion-actual">Ninguna</span></p>
+
+    <button onclick="playPause()" id="btnPlay" class="btn-centro">
+        ▶️ Reproducir
+    </button>
+
+    <button onclick="volverGustos()" class="btn-centro">Volver</button>
+
+    <audio id="music"></audio>
+</section>
+
+<!-- VIDEO -->
+<section id="video" style="display:none;">
+    <h1>Mi Video</h1>
+
+    <video controls width="400">
+        <source src="video/video.mp4" type="video/mp4">
+        Tu navegador no soporta video.
+    </video>
+
+    <br><br>
+    <button onclick="volverGustos()" class="btn-centro">Volver</button>
+</section>
+
+<script>
+function mostrarGustos() {
+    ocultarTodo();
+    document.getElementById("gustos").style.display = "block";
+}
+
+function mostrarMusica() {
+    ocultarTodo();
+    document.getElementById("musica").style.display = "block";
+}
+
+function mostrarVideo() {
+    ocultarTodo();
+    document.getElementById("video").style.display = "block";
+}
+
+function volverInicio() {
+    ocultarTodo();
+    document.getElementById("inicio").style.display = "block";
+}
+
+function volverGustos() {
+    ocultarTodo();
+    document.getElementById("gustos").style.display = "block";
+
+    const audio = document.getElementById("music");
+    audio.pause();
+    audio.currentTime = 0;
+    document.getElementById("btnPlay").textContent = "▶️ Reproducir";
+    document.getElementById("cancion-actual").textContent = "Ninguna";
+}
+
+function ocultarTodo() {
+    document.getElementById("inicio").style.display = "none";
+    document.getElementById("gustos").style.display = "none";
+    document.getElementById("musica").style.display = "none";
+    document.getElementById("video").style.display = "none";
+}
+
+function playPause() {
+    const audio = document.getElementById("music");
+    const select = document.getElementById("listaCanciones");
+    const texto = document.getElementById("cancion-actual");
+    const boton = document.getElementById("btnPlay");
+
+    if (select.value === "") {
+        alert("Primero selecciona una canción");
+        return;
+    }
+
+    if (audio.src !== select.value) {
+        audio.src = select.value;
+        texto.textContent = select.options[select.selectedIndex].text;
+    }
+
+    if (audio.paused) {
+        audio.play();
+        boton.textContent = "⏸️ Pausar";
+    } else {
+        audio.pause();
+        boton.textContent = "▶️ Reproducir";
+    }
+}
+</script>
+
+</body>
+</html>
